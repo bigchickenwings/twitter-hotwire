@@ -18,7 +18,7 @@ class TweetsController < ApplicationController
 
   # GET /tweets/1/edit
   def edit
-    return unless @tweet.user.id == current_user.id
+    return unless @tweet.user == current_user
   end
 
   # POST /tweets or /tweets.json
@@ -38,7 +38,7 @@ class TweetsController < ApplicationController
 
   # PATCH/PUT /tweets/1 or /tweets/1.json
   def update
-    return unless @tweet.user.id == current_user.id
+    return unless @tweet.user == current_user
 
     respond_to do |format|
       if @tweet.update(tweet_params)
@@ -53,7 +53,7 @@ class TweetsController < ApplicationController
 
   # DELETE /tweets/1 or /tweets/1.json
   def destroy
-    return unless @tweet.user.id == current_user.id
+    return unless @tweet.user == current_user
 
     @tweet.destroy
 
@@ -71,6 +71,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.fetch(:tweet, {})
+      params.require(:tweet).permit(:body)
     end
 end
