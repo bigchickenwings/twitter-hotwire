@@ -16,11 +16,11 @@ class TweetsTest < ApplicationSystemTestCase
     user = create(:user)
     visit tweets_path(as: user)
 
-    click_on "New tweet"
+    fill_in "What's on your mind?", with: "first tweet"
     click_on "Create Tweet"
 
     assert_text "Tweet was successfully created"
-    click_on "Back"
+    assert_text "first tweet"
   end
 
   test "should update Tweet" do
@@ -30,10 +30,12 @@ class TweetsTest < ApplicationSystemTestCase
     visit tweet_path(tweet)
 
     click_on "Edit this tweet", match: :first
+
+    fill_in "What's on your mind?", with: "updated tweet"
     click_on "Update Tweet"
 
     assert_text "Tweet was successfully updated"
-    click_on "Back"
+    assert_text "updated tweet"
   end
 
   test "should destroy Tweet" do
