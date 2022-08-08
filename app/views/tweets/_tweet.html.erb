@@ -1,3 +1,5 @@
 <div id="<%= dom_id tweet %>">
   <%= link_to tweet.body, tweet %>
+  <%= button_to "Like this tweet (#{tweet.likes.count})", tweet_like_url(tweet) %>
+  <%= button_to "Unlike this tweet (#{tweet.likes.count})", tweet_like_url(tweet), method: :delete %>
 </div>

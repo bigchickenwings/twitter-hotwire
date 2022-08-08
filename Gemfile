@@ -71,5 +71,6 @@ group :test do
   gem "capybara"
   gem "factory_bot_rails"
   gem "selenium-webdriver"
+  gem 'simplecov', require: false
   gem "webdrivers"
 end
