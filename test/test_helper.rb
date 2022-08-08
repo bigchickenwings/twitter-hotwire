@@ -3,6 +3,8 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "clearance/test_unit"
 require "support/factory_bot"
+require 'simplecov'
+SimpleCov.start
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers

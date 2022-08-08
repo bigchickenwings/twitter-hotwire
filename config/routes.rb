@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :tweets
+  resources :tweets do
+    resource :like, only: %w[ create destroy ]
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
