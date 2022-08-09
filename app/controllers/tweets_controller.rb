@@ -4,7 +4,7 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
-    @tweets = Tweet.all
+    @tweets = Tweet.all.includes(:likes).order(created_at: :desc)
   end
 
   # GET /tweets/1 or /tweets/1.json
@@ -27,9 +27,12 @@ class TweetsController < ApplicationController
 
     respond_to do |format|
       if @tweet.save
+        flash[:notice] = "Tweet was successfully created."
+        format.turbo_stream
         format.html { redirect_to tweet_url(@tweet), notice: "Tweet was successfully created." }
         format.json { render :show, status: :created, location: @tweet }
       else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("#{helpers.dom_id(@tweet)}_form", partial: "form", locals: { tweet: @tweet }) }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @tweet.errors, status: :unprocessable_entity }
       end
@@ -45,6 +48,7 @@ class TweetsController < ApplicationController
         format.html { redirect_to tweet_url(@tweet), notice: "Tweet was successfully updated." }
         format.json { render :show, status: :ok, location: @tweet }
       else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("#{helpers.dom_id(@tweet)}_form", partial: "form", locals: { tweet: @tweet }) }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @tweet.errors, status: :unprocessable_entity }
       end
@@ -58,6 +62,7 @@ class TweetsController < ApplicationController
     @tweet.destroy
 
     respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("#{helpers.dom_id(@tweet)}_item") }
       format.html { redirect_to tweets_url, notice: "Tweet was successfully destroyed." }
       format.json { head :no_content }
     end
