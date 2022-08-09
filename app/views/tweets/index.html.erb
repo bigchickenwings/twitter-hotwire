@@ -1,12 +1,10 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render "new" %>
-
 <h1>Tweets</h1>
 
+<%= render "form", tweet: Tweet.new %>
+
+<%= turbo_stream_from "tweets" %>
 <div id="tweets">
-  <% @tweets.each do |tweet| %>
-    <%= render tweet %>
-    <hr>
-  <% end %>
+  <%= render @tweets %>
 </div>

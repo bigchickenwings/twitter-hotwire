@@ -1,5 +1,12 @@
-<div id="<%= dom_id tweet %>">
-  <%= link_to tweet.body, tweet %>
-  <%= button_to "Like this tweet (#{tweet.likes.count})", tweet_like_url(tweet) %>
-  <%= button_to "Unlike this tweet (#{tweet.likes.count})", tweet_like_url(tweet), method: :delete %>
+<div id="<%= "#{dom_id(tweet)}_item" %>">
+  <%= turbo_frame_tag dom_id(tweet) do %>
+    <p><%= link_to tweet.body, tweet %></p>
+    <br>
+    <%= link_to "Edit", edit_tweet_path(tweet) %>
+    <%= button_to "Delete", tweet_path(tweet), method: :delete %>
+    <br>
+    <%= button_to "Like this tweet (#{tweet.likes.count})", tweet_like_url(tweet) %>
+    <%= button_to "Unlike this tweet (#{tweet.likes.count})", tweet_like_url(tweet), method: :delete %>
+    <hr>
+  <% end %>
 </div>

@@ -19,7 +19,6 @@ class TweetsTest < ApplicationSystemTestCase
     fill_in "What's on your mind?", with: "first tweet"
     click_on "Create Tweet"
 
-    assert_text "Tweet was successfully created"
     assert_text "first tweet"
   end
 
@@ -34,7 +33,6 @@ class TweetsTest < ApplicationSystemTestCase
     fill_in "What's on your mind?", with: "updated tweet"
     click_on "Update Tweet"
 
-    assert_text "Tweet was successfully updated"
     assert_text "updated tweet"
   end
 
@@ -42,10 +40,9 @@ class TweetsTest < ApplicationSystemTestCase
     user = create(:user)
     tweet = create(:tweet, user: user)
     visit root_path(as: user)
-    visit tweet_path(tweet)
 
-    click_on "Destroy this tweet", match: :first
+    click_on "Delete", match: :first
 
-    assert_text "Tweet was successfully destroyed"
+    assert_selector "p", text: "first tweet", count: 0
   end
 end
